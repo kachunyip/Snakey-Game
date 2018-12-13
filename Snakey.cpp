@@ -145,6 +145,7 @@ class snake:public board
 		int mark;
 		char direction;
 		char lastDirection;
+		char testButton;
 		int p[2][eachStep];
 		snake();
 		void move();
@@ -166,7 +167,7 @@ snake::snake()
 	}
 	score = 0,head = 3,tail = 0,length = 4;
 	grade = 1,gamespeed = 500;
-	direction = 77;
+	lastDirection = direction = 77;
 }
 
 void snake::move()
@@ -178,8 +179,15 @@ void snake::move()
 		while((mark=((clock()-recordTime)<=gamespeed)) && !kbhit());
 		if(mark)
 		{
-			getch();
-			direction = getch();
+			testButton = getch();
+			if(testButton != (char)224)
+			{
+				direction = lastDirection;	
+			}
+			else
+			{
+				direction = getch();
+			}
 		}
 		switch(direction)
 		{
@@ -198,6 +206,8 @@ void snake::move()
 			case 80:
 				x = p[0][head]+1;
 				y = p[1][head];
+				break;
+			default:
 				break;
 		}
 		if(x==lastX && y==lastY)
